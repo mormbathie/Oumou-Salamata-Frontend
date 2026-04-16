@@ -17,10 +17,9 @@ export default function Dashboard() {
 
   return (
     <Flex minH="100vh">
-      {/* Sidebar */}
       <Box w="250px" bg="blue.600" color="white" p={5}>
         <Heading size="md" mb={6}>
-          Oumou Salamat
+          Oumou Salamata
         </Heading>
 
         <Text mb={3} cursor="pointer">
@@ -46,7 +45,7 @@ export default function Dashboard() {
 
         <Box p={6} bg="white" borderRadius="xl" boxShadow="md">
           <Heading size="md" mb={2}>
-            Bienvenue 👋
+            Bienvenue !
           </Heading>
           <Text>Gestion de votre école en cours...</Text>
         </Box>

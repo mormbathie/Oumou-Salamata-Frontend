@@ -39,7 +39,7 @@ export default function Login() {
       >
         <VStack spacing={4}>
           <Heading size="lg">Connexion</Heading>
-          <Text color="gray.500">Bienvenue sur Oumou Salamat</Text>
+          <Text color="gray.500">Bienvenue sur Oumou Salamata</Text>
 
           <Input
             placeholder="Email"
@@ -56,7 +56,13 @@ export default function Login() {
             Se connecter
           </Button>
           <Text fontSize="sm">
-            Pas de compte ? <b>Créer un compte</b>
+            Pas de compte ?{" "}
+            <span
+              style={{ color: "blue", cursor: "pointer" }}
+              onClick={() => navigate("/register")}
+            >
+              S'inscrire
+            </span>
           </Text>
         </VStack>
       </Box>
