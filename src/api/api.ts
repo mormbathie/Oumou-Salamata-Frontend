@@ -60,7 +60,7 @@ export const api = {
   }) => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`${API_URL}/users/profile`, {
+    const res = await fetch(`${API_URL}/users/me`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
