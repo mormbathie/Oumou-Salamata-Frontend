@@ -1,75 +1,50 @@
 import {
   Box,
   Button,
-  Input,
+  Flex,
   Heading,
-  Text,
-  VStack,
-  Container,
+  Input,
+  Stack,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { api } from "../api/api"; // ✅ CORRIGÉ
 import { useNavigate } from "react-router-dom";
-import { register } from "../api/auth";
 
 export default function Register() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+  });
+
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const handleRegister = async () => {
-    try {
-      await register({ email, password });
-      navigate("/login");
-    } catch (err) {
-      console.log(err);
-    }
+    await api.register(form); // ✅ CORRIGÉ
+    navigate("/login");
   };
 
   return (
-    <Container centerContent h="100vh" justifyContent="center">
-      <Box
-        p={8}
-        maxW="400px"
-        w="100%"
-        borderRadius="xl"
-        boxShadow="lg"
-        bg="white"
-      >
-        <VStack spacing={4}>
-          <Heading size="lg">Créer un compte</Heading>
-          <Text color="gray.500">Rejoins Oumou Salamat</Text>
+    <Flex minH="100vh" align="center" justify="center" bg="gray.100">
+      <Box bg="white" p={8} rounded="xl" shadow="lg" w="400px">
+        <Heading mb={6} textAlign="center">
+          Register
+        </Heading>
 
-          <Input
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <Stack spacing={3}>
+          <Input placeholder="Email" onChange={(e)=>setForm({...form,email:e.target.value})}/>
+          <Input placeholder="Password" type="password" onChange={(e)=>setForm({...form,password:e.target.value})}/>
+          <Input placeholder="Prénom" onChange={(e)=>setForm({...form,firstName:e.target.value})}/>
+          <Input placeholder="Nom" onChange={(e)=>setForm({...form,lastName:e.target.value})}/>
+          <Input placeholder="Téléphone" onChange={(e)=>setForm({...form,phone:e.target.value})}/>
 
-          <Input
-            placeholder="Mot de passe"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <Button
-            colorScheme="blue"
-            w="100%"
-            onClick={handleRegister}
-          >
-            S’inscrire
+          <Button colorScheme="blue" onClick={handleRegister}>
+            S'inscrire
           </Button>
-
-          <Text fontSize="sm">
-            Déjà un compte ?{" "}
-            <span
-              style={{ color: "blue", cursor: "pointer" }}
-              onClick={() => navigate("/login")}
-            >
-              Se connecter
-            </span>
-          </Text>
-        </VStack>
+        </Stack>
       </Box>
-    </Container>
+    </Flex>
   );
 }
