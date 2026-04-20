@@ -19,6 +19,7 @@ export default function CreateStudent() {
     firstName: "",
     lastName: "",
     birthDate: "",
+    gender: "",
     classId: "",
     parentId: "",
   });
@@ -88,6 +89,7 @@ export default function CreateStudent() {
         firstName: "",
         lastName: "",
         birthDate: "",
+        gender: "",
         classId: "",
         parentId: "",
       });
@@ -143,6 +145,20 @@ export default function CreateStudent() {
                 }
               />
             </Box>
+            {/* Gender */}
+            <Box>
+              <label>Sexe</label>
+
+              <Select
+                placeholder="Sélectionner le sexe"
+                value={form.gender}
+                onChange={(e) => setForm({ ...form, gender: e.target.value })}
+              >
+                <option value="MALE">Masculin</option>
+                <option value="FEMALE">Féminin</option>
+              </Select>
+            </Box>
+            {/* Fin Gender */}
 
             {/* CLASSE */}
             <Box>

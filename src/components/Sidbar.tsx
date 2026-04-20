@@ -1,31 +1,68 @@
-import { Box, Button, Heading, Text, VStack } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Box, VStack, Text, Divider } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
-interface SidebarProps {
-  firstName?: string;
-  lastName?: string;
-}
-
-export default function Sidebar({ firstName, lastName }: SidebarProps) {
+export default function Sidebar({ firstName, lastName }: any) {
   const navigate = useNavigate();
 
+  const linkStyle = {
+    cursor: "pointer",
+    padding: "10px",
+    borderRadius: "8px",
+    _hover: { bg: "blue.600" },
+    w: "100%",
+  };
+
   return (
-    <Box w="250px" bg="blue.600" color="white" p={5} minH="100vh">
-      <Heading size="md" mb={8}>
-        {firstName} {lastName}
-      </Heading>
+    <Box
+      w="260px"
+      minH="100vh"
+      bg="blue.700"
+      color="white"
+      p={5}
+    >
+      {/* USER INFO */}
+      <Box mb={6}>
+        <Text fontSize="lg" fontWeight="bold">
+          {firstName} {lastName}
+        </Text>
+        <Text fontSize="sm" opacity={0.8}>
+          Administration
+        </Text>
+      </Box>
 
-      <Text mb={3} cursor="pointer" onClick={() => navigate("/dashboard")}>
-        Dashboard
-      </Text>
+      <Divider mb={4} />
 
-      <Text mb={3} cursor="pointer" onClick={() => navigate("/profile")}>
-        Profile
-      </Text>
-      <VStack p={4}>
-        <Link to="/create-student">
-          <Button w="100%">Créer élève</Button>
-        </Link>
+      {/* NAVIGATION */}
+      <VStack align="start" spacing={2}>
+        
+        <Text {...linkStyle} onClick={() => navigate("/dashboard")}>
+          📊 Dashboard
+        </Text>
+
+        <Text {...linkStyle} onClick={() => navigate("/students")}>
+          🧑‍🎓 Élèves
+        </Text>
+
+        <Text {...linkStyle} onClick={() => navigate("/students/create")}>
+          ➕ Ajouter Élève
+        </Text>
+
+        <Text {...linkStyle} onClick={() => navigate("/students/search")}>
+          🔎 Rechercher Élèves
+        </Text>
+
+        <Text {...linkStyle} onClick={() => navigate("/classes")}>
+          🏫 Classes
+        </Text>
+
+        <Text {...linkStyle} onClick={() => navigate("/parents")}>
+          👨‍👩‍👧 Parents
+        </Text>
+
+        <Text {...linkStyle} onClick={() => navigate("/profile")}>
+          👤 Profil
+        </Text>
+
       </VStack>
     </Box>
   );
