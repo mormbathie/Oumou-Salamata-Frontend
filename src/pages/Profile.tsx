@@ -16,9 +16,9 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { api } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidbar";
+import { usersApi } from "../api/users.api";
 
 export default function Profile() {
   const { user, loadUser } = useAuth();
@@ -48,7 +48,7 @@ export default function Profile() {
     setLoading(true);
 
     try {
-      await api.updateProfile(form);
+      await usersApi.updateProfile(form);
       await loadUser();
 
       toast({

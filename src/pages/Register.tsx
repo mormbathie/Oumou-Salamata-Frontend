@@ -7,8 +7,8 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { api } from "../api/api"; // ✅ CORRIGÉ
 import { useNavigate } from "react-router-dom";
+import { authApi } from "../api/auth";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -22,7 +22,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    await api.register(form); // ✅ CORRIGÉ
+    await authApi.register(form); 
     navigate("/login");
   };
 

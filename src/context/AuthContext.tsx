@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { api } from "../api/api";
+import { usersApi } from "../api/users.api";
 
 const AuthContext = createContext<any>(null);
 
@@ -8,8 +8,10 @@ export const AuthProvider = ({ children }: any) => {
 
   const loadUser = async () => {
     try {
-      const data = await api.fetchProfile();
+      const data = await usersApi.getProfile();
       setUser(data);
+      console.log(data);
+      
     } catch (err) {
       console.log(err);
     }

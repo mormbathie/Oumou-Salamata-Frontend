@@ -9,8 +9,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { api } from "../api/api";
 import Sidebar from "../components/Sidbar";
+import { studentsApi } from "../api/students.api";
+import { parentsApi } from "../api/parents.api";
+import { classesApi } from "../api/classes.api";
 
 export default function CreateStudent() {
   const toast = useToast();
@@ -32,7 +34,7 @@ export default function CreateStudent() {
   useEffect(() => {
     const fetchParents = async () => {
       try {
-        const data = await api.getParents();
+        const data = await parentsApi.getAll();
 
         if (Array.isArray(data)) {
           setParents(data);
@@ -59,7 +61,7 @@ export default function CreateStudent() {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const data = await api.getClasses();
+        const data = await classesApi.getAll();
         setClasses(data);
       } catch {
         toast({
@@ -76,7 +78,7 @@ export default function CreateStudent() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      await api.createStudent(form);
+      await studentsApi.create(form);
 
       toast({
         title: "Élève créé avec succès",
