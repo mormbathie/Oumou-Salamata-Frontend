@@ -1,5 +1,5 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Box, Button, Heading, Text, VStack } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   firstName?: string;
@@ -15,20 +15,18 @@ export default function Sidebar({ firstName, lastName }: SidebarProps) {
         {firstName} {lastName}
       </Heading>
 
-      <Text 
-        mb={3} 
-        cursor="pointer"
-        onClick={() => navigate("/dashboard")}>
+      <Text mb={3} cursor="pointer" onClick={() => navigate("/dashboard")}>
         Dashboard
       </Text>
 
-      <Text
-        mb={3}
-        cursor="pointer"
-        onClick={() => navigate("/profile")}
-      >
+      <Text mb={3} cursor="pointer" onClick={() => navigate("/profile")}>
         Profile
       </Text>
+      <VStack p={4}>
+        <Link to="/create-student">
+          <Button w="100%">Créer élève</Button>
+        </Link>
+      </VStack>
     </Box>
   );
 }

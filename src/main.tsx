@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./context/AuthContext";
 import Profile from "./pages/Profile";
+import CreateStudent from "./pages/CreateStudent";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ChakraProvider>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile/>}/>
+          <Route path="/create-student" element={<CreateStudent />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

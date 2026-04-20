@@ -74,6 +74,54 @@ export const api = {
     return res.json();
   },
 
+
+
+  getParents: async () => {
+  const res = await fetch("http://localhost:3000/auth?role=PARENT", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  return res.json();
+},
+
+getStudents:async()=>{
+   const res = await fetch("http://localhost:3000/students", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  return res.json();
+
+
+},
+
+
+  getClasses: async () => {
+    const res = await fetch("http://localhost:3000/classes", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return res.json();
+  },
+
+  createStudent: async (data: any) => {
+    const res = await fetch("http://localhost:3000/students", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) throw new Error("Erreur création");
+
+    return res.json();
+  },
+
+
   // 🚪 LOGOUT (optionnel)
   logout: () => {
     localStorage.removeItem("token");

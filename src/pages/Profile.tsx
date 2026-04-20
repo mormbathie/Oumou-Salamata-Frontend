@@ -12,25 +12,28 @@ import {
   TableContainer,
   Spinner,
   useToast,
+  Avatar,
+  HStack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { api } from "../api/api";
 import { useAuth } from "../context/AuthContext";
-import Sidebar from "../components/Sidbar"; // ✅ corrigé
+import Sidebar from "../components/Sidbar";
 
 export default function Profile() {
   const { user, loadUser } = useAuth();
   const toast = useToast();
 
   const [form, setForm] = useState<any>(null);
+  const [initialForm, setInitialForm] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<{
-    type: "success" | "error";
-    text: string;
-  } | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (user) setForm(user);
+    if (user) {
+      setForm(user);
+      setInitialForm(user);
+    }
   }, [user]);
 
   if (!form || !user) {
@@ -43,50 +46,39 @@ export default function Profile() {
 
   const handleUpdate = async () => {
     setLoading(true);
-    setMessage(null);
 
     try {
       await api.updateProfile(form);
       await loadUser();
 
-      // ✅ message sous formulaire
-      setMessage({
-        type: "success",
-        text: "Profil mis à jour avec succès ✅",
-      });
-
-      // ✅ toast
       toast({
-        title: "Succès",
-        description: "Votre profil a été mis à jour.",
+        title: "Profil mis à jour",
         status: "success",
         duration: 3000,
         isClosable: true,
-        position: "top-right",
       });
+
+      setIsEditing(false);
+      setInitialForm(form);
 
     } catch (error: any) {
-      const errorMessage =
-        error?.response?.data?.message ||
-        "Une erreur est survenue ❌";
-
-      setMessage({
-        type: "error",
-        text: errorMessage,
-      });
-
       toast({
         title: "Erreur",
-        description: errorMessage,
+        description:
+          error?.response?.data?.message ||
+          "Une erreur est survenue",
         status: "error",
         duration: 4000,
         isClosable: true,
-        position: "top-right",
       });
-
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancel = () => {
+    setForm(initialForm);
+    setIsEditing(false);
   };
 
   return (
@@ -99,11 +91,54 @@ export default function Profile() {
 
       {/* Content */}
       <Flex flex="1" justify="center" align="center" bg="gray.100">
-        <Box bg="white" p={8} rounded="xl" shadow="lg" w="600px">
-          <Heading mb={6}>Mon Profil</Heading>
+        <Box bg="white" p={8} rounded="xl" shadow="lg" w="700px">
+          
+          {/* HEADER */}
+          <HStack spacing={4} mb={6}>
+            <Avatar
+              name={`${user.firstName} ${user.lastName}`}
+              size="lg"
+            />
+            <Box>
+              <Heading size="md">
+                {user.firstName} {user.lastName}
+              </Heading>
+            </Box>
+          </HStack>
+
+          {/* ACTION BUTTONS */}
+          <Flex justify="space-between" mb={4}>
+            <Heading size="md">Informations</Heading>
+
+            {!isEditing ? (
+              <Button
+                colorScheme="blue"
+                onClick={() => setIsEditing(true)}
+              >
+                Modifier
+              </Button>
+            ) : (
+              <HStack>
+                <Button
+                  variant="outline"
+                  onClick={handleCancel}
+                >
+                  Annuler
+                </Button>
+
+                <Button
+                  colorScheme="blue"
+                  onClick={handleUpdate}
+                  isLoading={loading}
+                >
+                  Sauvegarder
+                </Button>
+              </HStack>
+            )}
+          </Flex>
 
           {/* TABLE */}
-          <TableContainer mb={6}>
+          <TableContainer>
             <Table variant="simple">
               <Tbody>
                 <Tr>
@@ -111,8 +146,12 @@ export default function Profile() {
                   <Td>
                     <Input
                       value={form.firstName || ""}
+                      isDisabled={!isEditing}
                       onChange={(e) =>
-                        setForm({ ...form, firstName: e.target.value })
+                        setForm({
+                          ...form,
+                          firstName: e.target.value,
+                        })
                       }
                     />
                   </Td>
@@ -123,8 +162,12 @@ export default function Profile() {
                   <Td>
                     <Input
                       value={form.lastName || ""}
+                      isDisabled={!isEditing}
                       onChange={(e) =>
-                        setForm({ ...form, lastName: e.target.value })
+                        setForm({
+                          ...form,
+                          lastName: e.target.value,
+                        })
                       }
                     />
                   </Td>
@@ -142,8 +185,12 @@ export default function Profile() {
                   <Td>
                     <Input
                       value={form.phone || ""}
+                      isDisabled={!isEditing}
                       onChange={(e) =>
-                        setForm({ ...form, phone: e.target.value })
+                        setForm({
+                          ...form,
+                          phone: e.target.value,
+                        })
                       }
                     />
                   </Td>
@@ -158,30 +205,6 @@ export default function Profile() {
               </Tbody>
             </Table>
           </TableContainer>
-
-          {/* BUTTON */}
-          <Flex justify="flex-end">
-            <Button
-              colorScheme="blue"
-              onClick={handleUpdate}
-              isLoading={loading}
-            >
-              Mettre à jour
-            </Button>
-          </Flex>
-
-          {/* MESSAGE */}
-          {message && (
-            <Box
-              mt={4}
-              p={3}
-              rounded="md"
-              bg={message.type === "success" ? "green.100" : "red.100"}
-              color={message.type === "success" ? "green.700" : "red.700"}
-            >
-              {message.text}
-            </Box>
-          )}
         </Box>
       </Flex>
     </Flex>
