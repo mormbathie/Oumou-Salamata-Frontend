@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../api/api"; // ✅ CORRIGÉ
 import { useAuth } from "../context/AuthContext";
+import { authApi } from "../api/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const data = await api.login(email, password); // ✅ CORRIGÉ
+    const data = await authApi.login(email, password); // ✅ CORRIGÉ
     localStorage.setItem("token", data.access_token);
     await loadUser();
     navigate("/dashboard");

@@ -1,15 +1,21 @@
-import { api } from "./api";
+import { apiClient } from "./clients";
 
-export const login = async (email: string, password: string) => {
-  const res = await api.post("/auth/login", {
-    email,
-    password,
-  });
+export const authApi = {
+  login: (email: string, password: string) =>
+    apiClient("/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    }),
 
-  return res.data;
-};
+  register: (data: any) =>
+    apiClient("/auth/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 
-export const register = async (data: any) => {
-  const res = await api.post("/auth/register", data);
-  return res.data;
+    getAllusers : (data: any)=>
+      apiClient("/auth",{
+        method : "GET",
+        body: JSON.stringify(data)
+      })
 };
