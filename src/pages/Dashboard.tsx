@@ -105,13 +105,12 @@ export default function Dashboard() {
       {/* MAIN */}
       <Box flex="1" p={6} bg="gray.50">
         {/* TOP BAR */}
-      
+
         <Flex justify="space-between" mb={6}>
-         <Navbar user={user} />
+          <Navbar user={user} />
         </Flex>
 
         {/* WELCOME */}
-
 
         <Flex gap={4} mb={6}>
           <Box flex="1" p={6} bg="blue.500" color="white" rounded="xl">
@@ -193,6 +192,15 @@ export default function Dashboard() {
                           onClick={() => handleDelete(s.id)}
                         >
                           Delete
+                        </Button>
+                        <Button
+                          size="sm"
+                          leftIcon={<ViewIcon />}
+                          colorScheme="gray"
+                          variant="outline"
+                          onClick={() => navigate(`/students/${s.id}`)}
+                        >
+                          View
                         </Button>
                       </Flex>
                     </Td>

@@ -12,4 +12,10 @@ export const authApi = {
       method: "POST",
       body: JSON.stringify(data),
     }),
+
+    getAllusers : (data: any)=>
+      apiClient("/auth",{
+        method : "GET",
+        body: JSON.stringify(data)
+      })
 };

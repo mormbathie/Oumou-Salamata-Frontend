@@ -56,6 +56,7 @@ export default function Sidebar({ firstName, lastName }: any) {
         <LinkItem icon={SettingsIcon} label="Classes" path="/classes" />
         <LinkItem icon={AtSignIcon} label="Parents" path="/parents" />
         <LinkItem icon={SettingsIcon} label="Profil" path="/profile" />
+        <LinkItem icon={SettingsIcon} label="Aministration" path="/user/admin" />
       </VStack>
     </Box>
   );
