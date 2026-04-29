@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { authApi } from "../api/auth";
@@ -24,6 +24,12 @@ export default function Login() {
     await loadUser();
     navigate("/dashboard");
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <Flex minH="100vh" align="center" justify="center" bg="gray.100">
